@@ -77,6 +77,16 @@ local master_postinit = function(inst)
 	inst.components.health:SetMaxHealth(150)
 	inst.components.hunger:SetMax(175)
 	inst.components.sanity:SetMax(125)
+
+    -- Food heals capped at 5
+    local _Eat = inst.components.eater.Eat
+    function inst.components.eater:Eat( food )
+        if food.components.edible.healthvalue > 5 then
+            food.components.edible.healthvalue = 5
+        end
+        return _Eat( self, food )
+    end
+
 	
     -- Immune to freezing/overheating
     inst.components.temperature.mintemp = 20
