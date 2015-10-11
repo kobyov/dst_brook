@@ -1,7 +1,7 @@
 local assets =
 {
     Asset("ANIM", "anim/swordcane.zip"),
-    --Asset("ANIM", "anim/swap_swordcane.zip"),
+    Asset("ANIM", "anim/swap_swordcane.zip"),
     
     Asset("ATLAS", "images/inventoryimages/swordcane.xml"),
     Asset("IMAGE", "images/inventoryimages/swordcane.tex"),
@@ -18,9 +18,8 @@ local function onunequip(inst, owner)
     owner.AnimState:Show("ARM_normal")
 end
 
----------BLUE STAFF---------
 
-local function onattack_blue(inst, attacker, target, skipsanity)
+local function onattack_hum(inst, attacker, target, skipsanity)
     
     if attacker and attacker.components.sanity and not skipsanity then
         attacker.components.sanity:DoDelta(-TUNING.SANITY_SUPERTINY)
@@ -51,22 +50,6 @@ local function onattack_blue(inst, attacker, target, skipsanity)
     end
 end
 
-local function blue()
-    local inst = commonfn("blue", { "icestaff", "extinguisher" })
-
-    if not TheWorld.ismastersim then
-        return inst
-    end
-
-    inst:AddComponent("weapon")
-    inst.components.weapon:SetOnAttack(onattack_blue)
-    inst.components.weapon:SetProjectile("ice_projectile")
-
-    MakeHauntableLaunch(inst)
-    
-    return inst
-end
-
 local function fn()
     local inst = CreateEntity()
 
@@ -89,6 +72,7 @@ local function fn()
     
     inst:AddComponent("weapon")
     inst.components.weapon:SetDamage(TUNING.CANE_DAMAGE)
+    inst.components.weapon:SetOnAttack(onattack_hum)
 
     inst:AddComponent("inspectable")
 

@@ -30,6 +30,8 @@ Assets = {
 local require = GLOBAL.require
 local STRINGS = GLOBAL.STRINGS
 
+GLOBAL.STRINGS.NAMES.SWORDCANE = "Humming Sword"
+
 -- The character select screen lines
 STRINGS.CHARACTER_TITLES.brook = "The Gentleman Skeleton"
 STRINGS.CHARACTER_NAMES.brook = "Brook"

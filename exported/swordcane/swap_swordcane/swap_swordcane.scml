@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="b5">
+    <folder id="0" name="swap_swordcane">
+        <file id="0" name="swap_swordcane/swap_swordcane.png" width="94" height="166" pivot_x="0.395236" pivot_y="0.127906"/>
+    </folder>
+    <entity id="0" name="swap_swordcane">
+        <animation id="0" name="BUILD" length="1000">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" name="swap_swordcane" folder="0" file="0" abs_x="5.106862" abs_y="-4.628503" abs_pivot_x="0.395236" abs_pivot_y="0.127906" abs_angle="359.676819" abs_scale_x="1" abs_scale_y="1" abs_a="1" timeline="0" key="0" z_index="0"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="swap_swordcane">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" x="5.106862" y="-4.628503" angle="359.676819" scale_x="1" scale_y="1"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>
