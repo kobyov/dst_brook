@@ -40,6 +40,7 @@ local prefabs = {
 -- Custom starting items
 local start_inv = {
     "swordcane",
+    "violin",
 }
 
 -- When the character is revived from human
@@ -57,7 +58,6 @@ local function onload(inst)
         onbecamehuman(inst)
     end
 end
-
 
 -- This initializes for both the server and client. Tags can be added here.
 local common_postinit = function(inst) 
@@ -87,7 +87,6 @@ local master_postinit = function(inst)
         return _Eat( self, food )
     end
 
-	
     -- Immune to freezing/overheating
     inst.components.temperature.mintemp = 20
     inst.components.temperature.maxtemp = 50

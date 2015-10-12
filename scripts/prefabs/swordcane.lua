@@ -71,7 +71,7 @@ local function fn()
     end
     
     inst:AddComponent("weapon")
-    inst.components.weapon:SetDamage(TUNING.CANE_DAMAGE)
+    inst.components.weapon:SetDamage(TUNING.SPEAR_DAMAGE)
     inst.components.weapon:SetOnAttack(onattack_hum)
 
     inst:AddComponent("inspectable")
@@ -79,12 +79,14 @@ local function fn()
     inst:AddComponent("inventoryitem")
     inst.components.inventoryitem.imagename = "swordcane"
     inst.components.inventoryitem.atlasname = "images/inventoryimages/swordcane.xml"
+    inst.components.inventoryitem.keepondeath = true
 
     inst:AddComponent("equippable")
 
     inst.components.equippable:SetOnEquip(onequip)
     inst.components.equippable:SetOnUnequip(onunequip)
     inst.components.equippable.walkspeedmult = TUNING.CANE_SPEED_MULT
+    
 
     MakeHauntableLaunch(inst)
 
