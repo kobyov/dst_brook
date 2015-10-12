@@ -32,7 +32,7 @@ local require = GLOBAL.require
 local STRINGS = GLOBAL.STRINGS
 
 GLOBAL.STRINGS.NAMES.SWORDCANE = "Humming Sword"
-GLOBAL.STRINGS.NAMES.VIOLIN = "Humming Violin"
+GLOBAL.STRINGS.NAMES.VIOLIN = "Brook's Violin"
 
 -- The character select screen lines
 STRINGS.CHARACTER_TITLES.brook = "The Gentleman Skeleton"
