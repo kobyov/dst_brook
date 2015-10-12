@@ -87,6 +87,14 @@ local function fn()
     inst.components.equippable:SetOnUnequip(onunequip)
     inst.components.equippable.walkspeedmult = TUNING.CANE_SPEED_MULT
     
+    if not inst.components.characterspecific then
+        inst:AddComponent("characterspecific")
+    end
+	
+	inst.components.characterspecific:SetOwner("brook")
+    inst.components.characterspecific:SetStorable(true)
+    inst.components.characterspecific:SetComment("Cold enough to sear flesh") 
+    
 
     MakeHauntableLaunch(inst)
 

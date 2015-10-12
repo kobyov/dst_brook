@@ -74,6 +74,14 @@ local function fn()
     inst.components.equippable.walkspeedmult = 0.5
 
     MakeHauntableLaunch(inst)
+    
+    if not inst.components.characterspecific then
+        inst:AddComponent("characterspecific")
+    end
+	
+	inst.components.characterspecific:SetOwner("brook")
+    inst.components.characterspecific:SetStorable(true)
+    inst.components.characterspecific:SetComment("It looks like it goes out of tune easily")
 
     return inst
 end
