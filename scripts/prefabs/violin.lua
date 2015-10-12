@@ -1,7 +1,7 @@
 local assets =
 {
-    Asset("ANIM", "anim/swordcane.zip"),
-    Asset("ANIM", "anim/swap_swordcane.zip"),
+    Asset("ANIM", "anim/violin.zip"),
+    Asset("ANIM", "anim/swap_violin.zip"),
     
     Asset("ATLAS", "images/inventoryimages/violin.xml"),
     Asset("IMAGE", "images/inventoryimages/violin.tex"),
@@ -16,7 +16,7 @@ local function playviolin(inst, owner)
 end
 
 local function onequip(inst, owner)
-    owner.AnimState:OverrideSymbol("swap_object", "swap_swordcane", "swap_swordcane")
+    owner.AnimState:OverrideSymbol("swap_object", "swap_violin", "swap_violin")
     owner.AnimState:Show("ARM_carry")
     owner.AnimState:Hide("ARM_normal")
     inst.components.sanityaura.aura = TUNING.SANITYAURA_TINY
@@ -44,8 +44,8 @@ local function fn()
 
     MakeInventoryPhysics(inst)
 
-    inst.AnimState:SetBank("swordcane")
-    inst.AnimState:SetBuild("swordcane")
+    inst.AnimState:SetBank("violin")
+    inst.AnimState:SetBuild("violin")
     inst.AnimState:PlayAnimation("idle")
 
     inst.entity:SetPristine()
@@ -74,14 +74,6 @@ local function fn()
     inst.components.equippable.walkspeedmult = 0.5
 
     MakeHauntableLaunch(inst)
-    
-    if not inst.components.characterspecific then
-        inst:AddComponent("characterspecific")
-    end
-	
-	inst.components.characterspecific:SetOwner("brook")
-    inst.components.characterspecific:SetStorable(true)
-    inst.components.characterspecific:SetComment("It looks like it goes out of tune easily")
 
     return inst
 end
