@@ -19,14 +19,18 @@ local function onequip(inst, owner)
     owner.AnimState:OverrideSymbol("swap_object", "swap_violin", "swap_violin")
     owner.AnimState:Show("ARM_carry")
     owner.AnimState:Hide("ARM_normal")
-    inst.components.sanityaura.aura = TUNING.SANITYAURA_TINY
-    inst.task = inst:DoPeriodicTask(20, playviolin, nil, owner)
+    if (owner.components.sanityaura) then
+        owner.components.sanityaura.aura = TUNING.SANITYAURA_TINY
+    end
+    inst.task = inst:DoPeriodicTask(15, playviolin, nil, owner)
 end
 
 local function onunequip(inst, owner)
     owner.AnimState:Hide("ARM_carry")
     owner.AnimState:Show("ARM_normal")
-    inst.components.sanityaura.aura = 0
+    if (owner.components.sanityaura) then
+        owner.components.sanityaura.aura = 0
+    end
     if inst.task ~= nil then
         inst.task:Cancel()
         inst.task = nil
@@ -53,10 +57,7 @@ local function fn()
     if not TheWorld.ismastersim then
         return inst
     end
-    
-    inst:AddComponent("sanityaura")
-    inst.components.sanityaura.aura = 0
-    
+
     inst:AddComponent("weapon")
     inst.components.weapon:SetDamage(TUNING.CANE_DAMAGE)
 

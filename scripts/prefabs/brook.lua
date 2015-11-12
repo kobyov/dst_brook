@@ -82,7 +82,7 @@ local master_postinit = function(inst)
     local _Eat = inst.components.eater.Eat
     function inst.components.eater:Eat( food )
         if food.components.edible.healthvalue > 5 then
-            food.components.edible.healthvalue = 5
+            food.components.edible.healthvalue = food.components.edible.healthvalue/2
         end
         return _Eat( self, food )
     end
@@ -95,6 +95,10 @@ local master_postinit = function(inst)
     inst.components.sanity.night_drain_mult = 1.2
 	inst.components.sanity.neg_aura_mult = 1.2
     
+    -- Can play violin
+    inst:AddComponent("sanityaura")
+    inst.components.sanityaura.aura = 0
+
 	-- Damage multiplier (optional)
     inst.components.combat.damagemultiplier = 1
 	
