@@ -81,7 +81,7 @@ local master_postinit = function(inst)
     -- Food heals capped at 5
     local _Eat = inst.components.eater.Eat
     function inst.components.eater:Eat( food )
-        if food.components.edible.healthvalue > 5 then
+        if food.components.edible.healthvalue then
             food.components.edible.healthvalue = food.components.edible.healthvalue/2
         end
         return _Eat( self, food )
