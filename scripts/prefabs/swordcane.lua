@@ -23,6 +23,7 @@ local function onattack_hum(inst, attacker, target, skipsanity)
     
     if attacker and attacker.components.sanity and not skipsanity then
         attacker.components.sanity:DoDelta(-TUNING.SANITY_TINY)
+        attacker.components.hunger:DoDelta(-TUNING.SANITY_SUPERTINY)
     end
     
     if target.components.sleeper and target.components.sleeper:IsAsleep() then
