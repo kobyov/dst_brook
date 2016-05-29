@@ -9,8 +9,7 @@ local assets =
 
 local function playviolin(inst, owner)
     if (owner.components.sanity and owner.components.sanity.current < owner.components.sanity.max)
-    and (owner.components.hunger and owner.components.hunger.current > 5) then
-        owner.components.sanity:DoDelta(TUNING.REDAMULET_CONVERSION,false,"violin")
+    and (owner.components.hunger and owner.components.hunger.current) then
         owner.components.hunger:DoDelta(-TUNING.REDAMULET_CONVERSION)
     end
 end
@@ -73,6 +72,7 @@ local function fn()
     inst.components.equippable:SetOnEquip(onequip)
     inst.components.equippable:SetOnUnequip(onunequip)
     inst.components.equippable.walkspeedmult = 0.5
+    inst.components.equippable.dapperness = TUNING.DAPPERNESS_MED
 
     MakeHauntableLaunch(inst)
 

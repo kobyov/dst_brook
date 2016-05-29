@@ -87,9 +87,10 @@ local master_postinit = function(inst)
         return _Eat( self, food )
     end
 
-    -- Immune to freezing/overheating
-    inst.components.temperature.mintemp = 20
-    inst.components.temperature.maxtemp = 50
+    -- Insulated from temp changes
+    inst.components.temperature.inherentinsulation = 120
+    inst.components.temperature.inherentsummerinsulation = -120
+
     
     -- Coward
     inst.components.sanity.night_drain_mult = 1.2
@@ -103,7 +104,7 @@ local master_postinit = function(inst)
     inst.components.combat.damagemultiplier = 1
 	
 	-- Hunger rate (optional)
-	inst.components.hunger.hungerrate = 0.75 * TUNING.WILSON_HUNGER_RATE
+	inst.components.hunger.hungerrate = TUNING.WILSON_HUNGER_RATE
 	
 	inst.OnLoad = onload
     inst.OnNewSpawn = onload
