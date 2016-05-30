@@ -7,22 +7,25 @@ local assets =
     Asset("IMAGE", "images/inventoryimages/swordcane.tex"),
 }
 
-local function IsValidOwner(inst, owner)
-    return owner:HasTag("deadbones")
-end
-
 local function ontakefuel(inst)
     inst.SoundEmitter:PlaySound("dontstarve/common/nightmareAddFuel")
 end
 
 local function onequip(inst, owner)
-    --if owner:HasTag("deadbones") then
+    if owner:HasTag("deadbones") then
         owner.AnimState:OverrideSymbol("swap_object", "swap_swordcane", "swap_swordcane")
         owner.AnimState:Show("ARM_carry")
         owner.AnimState:Hide("ARM_normal")
-    --else
-    --    inst.components.inventoryitem:RemoveFromOwner(inst)
-    --end
+    else
+        inst:DoTaskInTime(0, function()
+                if owner and owner.components and owner.components.inventory then
+                    owner.components.inventory:GiveItem(inst)
+                    if owner.components.talker then
+                        owner.components.talker:Say("Cold enough to sear flesh")
+                    end
+                end
+            end)
+    end
 end
 
 local function onunequip(inst, owner)
@@ -114,14 +117,6 @@ local function fn()
     inst.components.fueled:InitializeFuelLevel(100)
     inst.components.fueled.accepting = true
     inst.components.fueled.ontakefuelfn = ontakefuel
-
-    if not inst.components.characterspecific then
-        inst:AddComponent("characterspecific")
-    end
-	
-	inst.components.characterspecific:SetOwner("brook")
-    inst.components.characterspecific:SetStorable(true)
-    inst.components.characterspecific:SetComment("Cold enough to sear flesh") 
 
     MakeHauntableLaunch(inst)
 

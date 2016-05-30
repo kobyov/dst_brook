@@ -12,20 +12,31 @@ local function IsValidOwner(inst, owner)
 end
 
 local function onequip(inst, owner)
-    owner.AnimState:OverrideSymbol("swap_object", "swap_violin", "swap_violin")
-    owner.AnimState:Show("ARM_carry")
-    owner.AnimState:Hide("ARM_normal")
-    if (owner.components.sanityaura) then
-        owner.components.sanityaura.aura = TUNING.SANITYAURA_HUGE
+    if owner:HasTag("deadbones") then
+        owner.AnimState:OverrideSymbol("swap_object", "swap_violin", "swap_violin")
+        owner.AnimState:Show("ARM_carry")
+        owner.AnimState:Hide("ARM_normal")
+        if (owner.components.sanityaura) then
+            owner.components.sanityaura.aura = owner.components.sanityaura.aura + TUNING.SANITYAURA_HUGE
+        end
+        inst.components.fueled:StartConsuming()
+    else
+        inst:DoTaskInTime(0, function()
+                if owner and owner.components and owner.components.inventory then
+                    owner.components.inventory:GiveItem(inst)
+                    if owner.components.talker then
+                        owner.components.talker:Say("I'd only damage it if I tried")
+                    end
+                end
+            end)
     end
-    inst.components.fueled:StartConsuming()
 end
 
 local function onunequip(inst, owner)
     owner.AnimState:Hide("ARM_carry")
     owner.AnimState:Show("ARM_normal")
     if (owner.components.sanityaura) then
-        owner.components.sanityaura.aura = 0
+        owner.components.sanityaura.aura = owner.components.sanityaura.aura - TUNING.SANITYAURA_HUGE
     end
     inst.components.fueled:StopConsuming()
 end
