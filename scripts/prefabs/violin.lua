@@ -7,6 +7,10 @@ local assets =
     Asset("IMAGE", "images/inventoryimages/violin.tex"),
 }
 
+local function IsValidOwner(inst, owner)
+    return owner:HasTag("deadbones")
+end
+
 local function onequip(inst, owner)
     owner.AnimState:OverrideSymbol("swap_object", "swap_violin", "swap_violin")
     owner.AnimState:Show("ARM_carry")

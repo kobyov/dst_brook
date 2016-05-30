@@ -94,7 +94,6 @@ local master_postinit = function(inst)
     inst.components.temperature.inherentinsulation = 120
     inst.components.temperature.inherentsummerinsulation = -120
 
-    
     -- Coward
     inst.components.sanity.night_drain_mult = 1.2
 	inst.components.sanity.neg_aura_mult = 1.2
@@ -102,12 +101,6 @@ local master_postinit = function(inst)
     -- Can play violin
     inst:AddComponent("sanityaura")
     inst.components.sanityaura.aura = 0
-
-	-- Damage multiplier (optional)
-    inst.components.combat.damagemultiplier = 1
-	
-	-- Hunger rate (optional)
-	inst.components.hunger.hungerrate = TUNING.WILSON_HUNGER_RATE
 	
 	inst.OnLoad = onload
     inst.OnNewSpawn = onload

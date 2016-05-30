@@ -7,14 +7,22 @@ local assets =
     Asset("IMAGE", "images/inventoryimages/swordcane.tex"),
 }
 
+local function IsValidOwner(inst, owner)
+    return owner:HasTag("deadbones")
+end
+
 local function ontakefuel(inst)
     inst.SoundEmitter:PlaySound("dontstarve/common/nightmareAddFuel")
 end
 
 local function onequip(inst, owner)
-    owner.AnimState:OverrideSymbol("swap_object", "swap_swordcane", "swap_swordcane")
-    owner.AnimState:Show("ARM_carry")
-    owner.AnimState:Hide("ARM_normal")
+    --if owner:HasTag("deadbones") then
+        owner.AnimState:OverrideSymbol("swap_object", "swap_swordcane", "swap_swordcane")
+        owner.AnimState:Show("ARM_carry")
+        owner.AnimState:Hide("ARM_normal")
+    --else
+    --    inst.components.inventoryitem:RemoveFromOwner(inst)
+    --end
 end
 
 local function onunequip(inst, owner)
@@ -94,7 +102,6 @@ local function fn()
     inst:AddComponent("inventoryitem")
     inst.components.inventoryitem.imagename = "swordcane"
     inst.components.inventoryitem.atlasname = "images/inventoryimages/swordcane.xml"
-    inst.components.inventoryitem.keepondeath = true
 
     inst:AddComponent("equippable")
 
@@ -115,7 +122,6 @@ local function fn()
 	inst.components.characterspecific:SetOwner("brook")
     inst.components.characterspecific:SetStorable(true)
     inst.components.characterspecific:SetComment("Cold enough to sear flesh") 
-    
 
     MakeHauntableLaunch(inst)
 
