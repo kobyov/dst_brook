@@ -7,15 +7,18 @@ local assets =
     Asset("IMAGE", "images/inventoryimages/swordcane.tex"),
 }
 
-local function swordcanetakefuel(inst, item)
+local function SwordCaneTakeFuel(inst, item)
     if inst:CanAcceptFuelItem(item) then
         if item.prefab == "ice" then
             inst:DoDelta(1)
-            end
-        item:Remove()
         end
-    return true
+        item:Remove()
     end
+    return true
+end
+
+local function ontakefuel(inst)
+    inst.SoundEmitter:PlaySound("dontstarve/common/nightmareAddFuel")
 end
 
 local function onequip(inst, owner)
@@ -29,39 +32,35 @@ local function onunequip(inst, owner)
     owner.AnimState:Show("ARM_normal")
 end
 
-local function takefuel(inst)
-    if inst.components.equippable and inst.components.equippable:IsEquipped() then
-        turnon(inst)
-    end
-end
-
-local function turnon(inst)
-    if not inst.components.fueled:IsEmpty() then
-        inst.components.machine.ison = true
-    end
-end
-
-local function turnoff(inst)
-    if not inst.components.fueled:IsEmpty() then
-        inst.components.machine.ison = false
-    end
-end
-
 local function onattack_hum(inst, attacker, target, skipsanity)
+
+    if inst.components.fueled:IsEmpty() then
+        inst.components.weapon:SetDamage(TUNING.CANE_DAMAGE)
+    else
+        inst.components.weapon:SetDamage(TUNING.SPEAR_DAMAGE)
     
-    if attacker and attacker.components.sanity and not skipsanity then
-        attacker.components.sanity:DoDelta(-TUNING.SANITY_SUPERTINY)
+        if attacker and attacker.components.sanity and not skipsanity then
+            attacker.components.sanity:DoDelta(-TUNING.SANITY_SUPERTINY)
+        end
+
+        if target.components.burnable then
+            if target.components.burnable:IsBurning() then
+                target.components.burnable:Extinguish()
+            elseif target.components.burnable:IsSmoldering() then
+                target.components.burnable:SmotherSmolder()
+            end
+        end
+
+        if target.components.freezable then
+            target.components.freezable:AddColdness(1)
+            target.components.freezable:SpawnShatterFX()
+        end
+
+        inst.components.fueled:DoDelta(-1)
     end
     
     if target.components.sleeper and target.components.sleeper:IsAsleep() then
         target.components.sleeper:WakeUp()
-    end
-    if target.components.burnable then
-        if target.components.burnable:IsBurning() then
-            target.components.burnable:Extinguish()
-        elseif target.components.burnable:IsSmoldering() then
-            target.components.burnable:SmotherSmolder()
-        end
     end
 
     if target.components.combat then
@@ -71,13 +70,6 @@ local function onattack_hum(inst, attacker, target, skipsanity)
     if target.sg and not target.sg:HasStateTag("frozen") then
         target:PushEvent("attacked", {attacker = attacker, damage = 0})
     end
-
-    if target.components.freezable then
-        target.components.freezable:AddColdness(1)
-        target.components.freezable:SpawnShatterFX()
-    end
-
-    inst.components.fueled:DoDelta(-1)
 
 end
 
@@ -104,7 +96,7 @@ local function fn()
     end
     
     inst:AddComponent("weapon")
-    inst.components.weapon:SetDamage(TUNING.SPEAR_DAMAGE)
+    inst.components.weapon:SetDamage(TUNING.CANE_DAMAGE)
     inst.components.weapon:SetOnAttack(onattack_hum)
 
     inst:AddComponent("inspectable")
@@ -121,24 +113,18 @@ local function fn()
     inst.components.equippable.walkspeedmult = TUNING.CANE_SPEED_MULT
     
     inst:AddComponent("fueled")
-
-    inst:AddComponent("machine")
-    inst.components.machine.turnonfn = turnon
-    inst.components.machine.turnofffn = turnoff
-    inst.components.machine.cooldowntime = 0
-
-    inst.components.fueled:InitializeFuelLevel(20)
-    inst.components.fueled:SetDepletedFn(nofuel)
-    inst.components.fueled.ontakefuelfn = takefuel
+    inst.components.fueled.fueltype = FUELTYPE.NIGHTMARE
+    inst.components.fueled:InitializeFuelLevel(100)
     inst.components.fueled.accepting = true
-    inst.components.fueled.TakeFuelItem = SwordCaneTakeFuel
-    inst.components.fueled.CanAcceptFuelItem = function(inst, item)
-        if item.prefab == "ice" then
-        return true
-        else
-        return false
-        end
-    end
+    inst.components.fueled.ontakefuelfn = ontakefuel
+   -- inst.components.fueled.TakeFuelItem = SwordCaneTakeFuel
+    --inst.components.fueled.CanAcceptFuelItem = function(inst, item)
+      --  if item.prefab == "ice" then
+    --    return true
+      --  else
+    --    return false
+    --    end
+    --end
 
     if not inst.components.characterspecific then
         inst:AddComponent("characterspecific")
