@@ -7,16 +7,6 @@ local assets =
     Asset("IMAGE", "images/inventoryimages/swordcane.tex"),
 }
 
-local function SwordCaneTakeFuel(inst, item)
-    if inst:CanAcceptFuelItem(item) then
-        if item.prefab == "ice" then
-            inst:DoDelta(1)
-        end
-        item:Remove()
-    end
-    return true
-end
-
 local function ontakefuel(inst)
     inst.SoundEmitter:PlaySound("dontstarve/common/nightmareAddFuel")
 end
@@ -117,14 +107,6 @@ local function fn()
     inst.components.fueled:InitializeFuelLevel(100)
     inst.components.fueled.accepting = true
     inst.components.fueled.ontakefuelfn = ontakefuel
-   -- inst.components.fueled.TakeFuelItem = SwordCaneTakeFuel
-    --inst.components.fueled.CanAcceptFuelItem = function(inst, item)
-      --  if item.prefab == "ice" then
-    --    return true
-      --  else
-    --    return false
-    --    end
-    --end
 
     if not inst.components.characterspecific then
         inst:AddComponent("characterspecific")
