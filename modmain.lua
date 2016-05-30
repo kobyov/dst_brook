@@ -30,15 +30,18 @@ Assets = {
 
 local require = GLOBAL.require
 local STRINGS = GLOBAL.STRINGS
+local Ingredient = GLOBAL.Ingredient
+local RecipeTabs = GLOBAL.RECIPETABS
+local Tech = GLOBAL.TECH
 
-GLOBAL.STRINGS.NAMES.SWORDCANE = "Humming Sword"
-GLOBAL.STRINGS.NAMES.VIOLIN = "Brook's Violin"
+STRINGS.NAMES.SWORDCANE = "Humming Sword"
+STRINGS.NAMES.VIOLIN = "Brook's Violin"
 
 -- The character select screen lines
 STRINGS.CHARACTER_TITLES.brook = "The Gentleman Skeleton"
 STRINGS.CHARACTER_NAMES.brook = "Brook"
 STRINGS.CHARACTER_DESCRIPTIONS.brook = "*Skeleton\n*Musician\n*Coward"
-STRINGS.CHARACTER_QUOTES.brook = "\"Yohohohoho!\""
+STRINGS.CHARACTER_QUOTES.brook = "\"Yohohoho!\""
 
 -- Custom speech strings
 STRINGS.CHARACTERS.BROOK = require "speech_brook"
@@ -62,3 +65,11 @@ AddMinimapAtlas("images/map_icons/brook.xml")
 -- Add mod character to mod character list. Also specify a gender. Possible genders are MALE, FEMALE, ROBOT, NEUTRAL, and PLURAL.
 AddModCharacter("brook", "MALE")
 
+-- Crafting Recipies
+local violinRecipe = Recipe("violin", {Ingredient("silk", 4),Ingredient("livinglog", 1)}, RecipeTabs.MAGIC, Tech.NONE, nil, nil, nil, nil, "deadbones")
+violinRecipe.atlas = "images/inventoryimages/violin.xml"
+STRINGS.RECIPE_DESC.VIOLIN = "Yo-hohoho, Yo-hohoho"
+
+local swordcaneRecipe = Recipe("swordcane", {Ingredient("thulecite", 2),Ingredient("livinglog", 1),Ingredient("ice", 20)}, RecipeTabs.WAR, Tech.NONE, nil, nil, nil, nil, "deadbones")
+swordcaneRecipe.atlas = "images/inventoryimages/swordcane.xml"
+STRINGS.RECIPE_DESC.SWORDCANE = "Harness the icy winds of death"

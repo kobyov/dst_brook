@@ -7,6 +7,17 @@ local assets =
     Asset("IMAGE", "images/inventoryimages/swordcane.tex"),
 }
 
+local function swordcanetakefuel(inst, item)
+    if inst:CanAcceptFuelItem(item) then
+        if item.prefab == "ice" then
+            inst:DoDelta(1)
+            end
+        item:Remove()
+        end
+    return true
+    end
+end
+
 local function onequip(inst, owner)
     owner.AnimState:OverrideSymbol("swap_object", "swap_swordcane", "swap_swordcane")
     owner.AnimState:Show("ARM_carry")
@@ -18,12 +29,28 @@ local function onunequip(inst, owner)
     owner.AnimState:Show("ARM_normal")
 end
 
+local function takefuel(inst)
+    if inst.components.equippable and inst.components.equippable:IsEquipped() then
+        turnon(inst)
+    end
+end
+
+local function turnon(inst)
+    if not inst.components.fueled:IsEmpty() then
+        inst.components.machine.ison = true
+    end
+end
+
+local function turnoff(inst)
+    if not inst.components.fueled:IsEmpty() then
+        inst.components.machine.ison = false
+    end
+end
 
 local function onattack_hum(inst, attacker, target, skipsanity)
     
     if attacker and attacker.components.sanity and not skipsanity then
-        attacker.components.sanity:DoDelta(-TUNING.SANITY_TINY)
-        attacker.components.hunger:DoDelta(-TUNING.SANITY_SUPERTINY)
+        attacker.components.sanity:DoDelta(-TUNING.SANITY_SUPERTINY)
     end
     
     if target.components.sleeper and target.components.sleeper:IsAsleep() then
@@ -49,6 +76,9 @@ local function onattack_hum(inst, attacker, target, skipsanity)
         target.components.freezable:AddColdness(1)
         target.components.freezable:SpawnShatterFX()
     end
+
+    inst.components.fueled:DoDelta(-1)
+
 end
 
 local function fn()
@@ -64,6 +94,8 @@ local function fn()
     inst.AnimState:SetBank("swordcane")
     inst.AnimState:SetBuild("swordcane")
     inst.AnimState:PlayAnimation("idle")
+
+    inst:AddTag("sharp")
 
     inst.entity:SetPristine()
 
@@ -88,6 +120,26 @@ local function fn()
     inst.components.equippable:SetOnUnequip(onunequip)
     inst.components.equippable.walkspeedmult = TUNING.CANE_SPEED_MULT
     
+    inst:AddComponent("fueled")
+
+    inst:AddComponent("machine")
+    inst.components.machine.turnonfn = turnon
+    inst.components.machine.turnofffn = turnoff
+    inst.components.machine.cooldowntime = 0
+
+    inst.components.fueled:InitializeFuelLevel(20)
+    inst.components.fueled:SetDepletedFn(nofuel)
+    inst.components.fueled.ontakefuelfn = takefuel
+    inst.components.fueled.accepting = true
+    inst.components.fueled.TakeFuelItem = SwordCaneTakeFuel
+    inst.components.fueled.CanAcceptFuelItem = function(inst, item)
+        if item.prefab == "ice" then
+        return true
+        else
+        return false
+        end
+    end
+
     if not inst.components.characterspecific then
         inst:AddComponent("characterspecific")
     end

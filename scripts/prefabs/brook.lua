@@ -67,6 +67,9 @@ end
 
 -- This initializes for the server only. Components are added here.
 local master_postinit = function(inst)
+    -- character tags
+    inst:AddTag("deadbones")
+
 	-- choose which sounds this character will play
 	inst.soundsname = "woodie"
 	
