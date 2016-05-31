@@ -66,10 +66,8 @@ AddMinimapAtlas("images/map_icons/brook.xml")
 AddModCharacter("brook", "MALE")
 
 -- Crafting Recipies
-local violinRecipe = Recipe("violin", {Ingredient("silk", 4),Ingredient("livinglog", 1)}, RecipeTabs.MAGIC, Tech.NONE, nil, nil, nil, nil, "deadbones")
-violinRecipe.atlas = "images/inventoryimages/violin.xml"
+AddRecipe("violin", {Ingredient("silk", 4),Ingredient("livinglog", 1)}, RecipeTabs.MAGIC, Tech.NONE, nil, nil, nil, nil, "deadbones", "images/inventoryimages/violin.xml", "violin.tex")
 STRINGS.RECIPE_DESC.VIOLIN = "Yo-hohoho, Yo-hohoho"
 
-local swordcaneRecipe = Recipe("swordcane", {Ingredient("thulecite", 2),Ingredient("livinglog", 1),Ingredient("ice", 20)}, RecipeTabs.WAR, Tech.NONE, nil, nil, nil, nil, "deadbones")
-swordcaneRecipe.atlas = "images/inventoryimages/swordcane.xml"
+AddRecipe("swordcane", {Ingredient("thulecite", 2),Ingredient("livinglog", 1),Ingredient("ice", 20)}, RecipeTabs.WAR, Tech.NONE, nil, nil, nil, nil, "deadbones", "images/inventoryimages/swordcane.xml", "swordcane.tex")
 STRINGS.RECIPE_DESC.SWORDCANE = "Harness the icy winds of death"
