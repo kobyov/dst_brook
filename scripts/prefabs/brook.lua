@@ -63,13 +63,12 @@ end
 local common_postinit = function(inst) 
 	-- Minimap icon
 	inst.MiniMapEntity:SetIcon( "brook.tex" )
+        -- character tags
+    inst:AddTag("deadbones")
 end
 
 -- This initializes for the server only. Components are added here.
 local master_postinit = function(inst)
-    -- character tags
-    inst:AddTag("deadbones")
-
 	-- choose which sounds this character will play
 	inst.soundsname = "woodie"
 	
