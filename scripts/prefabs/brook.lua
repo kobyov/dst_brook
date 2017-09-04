@@ -59,6 +59,18 @@ local function onload(inst)
     end
 end
 
+local function friendcheck(inst)
+	local x,y,z = inst.Transform:GetWorldPosition()
+	local range = TUNING.ONEMANBAND_RANGE
+	local friends = TheSim:FindEntities(x, y, z, range, {"player"}, {"playerghost"})
+	local count = friends - 1
+	if count >= 1 then
+		inst.components.sanity.dapperness = DAPPERNESS_MED_LARGE
+	else
+		inst.components.sanity.dapperness = -1 x DAPPERNESS_SMALL
+	end
+end
+
 -- This initializes for both the server and client. Tags can be added here.
 local common_postinit = function(inst) 
 	-- Minimap icon
@@ -80,7 +92,7 @@ local master_postinit = function(inst)
 	inst.components.hunger:SetMax(175)
 	inst.components.sanity:SetMax(125)
 
-    -- Food heals capped at 5
+    -- Food heals halved
     local _Eat = inst.components.eater.Eat
     function inst.components.eater:Eat( food )
         if food.components.edible.healthvalue > 2 then
@@ -89,13 +101,12 @@ local master_postinit = function(inst)
         return _Eat( self, food )
     end
 
+    -- Lonely
+    inst.updatetask = inst:DoPeriodicTask(1, friendcheck)
+
     -- Insulated from temp changes
     inst.components.temperature.inherentinsulation = 120
     inst.components.temperature.inherentsummerinsulation = -120
-
-    -- Coward
-    inst.components.sanity.night_drain_mult = 1.2
-	inst.components.sanity.neg_aura_mult = 1.2
     
     -- Can play violin
     inst:AddComponent("sanityaura")
