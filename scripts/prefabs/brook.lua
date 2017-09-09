@@ -69,7 +69,7 @@ local function sanityfn(inst)
     end
     -- brook is alone
     if (delta == 0) then
-        delta = delta - TUNING.SANITYAURA_TINY
+        delta = delta - DAPPERNESS_TINY
     end
     return delta
 end
