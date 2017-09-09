@@ -108,8 +108,8 @@ local master_postinit = function(inst)
     end
 
     -- Insulated from temp changes
-    inst.components.temperature.inherentinsulation = 120
-    inst.components.temperature.inherentsummerinsulation = -120
+    inst.components.temperature.inherentinsulation = TUNING.BROOK.coldresist
+    inst.components.temperature.inherentsummerinsulation = TUNING.BROOK.heatresist
     
     -- Can play violin
     inst:AddComponent("sanityaura")

@@ -2,7 +2,7 @@
 name = "Brook"
 description = "Dead Bones Brook from One Piece"
 author = "kobyov and Dani the Marble"
-version = "1.2.0"
+version = "1.3.0"
 
 -- This is the URL name of the mod's thread on the forum; the part after the ? and before the first & in the url
 forumthread = ""
@@ -115,5 +115,31 @@ configuration_options =
             {description = "1.25 (wigfrid)", data = 1.25},
        },
         default = 1.0,
+    },
+    {
+        name = "BrookHypoIns",
+        label = "Cold Resistance",
+        options =
+        {
+            {description = "Miniscule", data = 30},
+            {description = "Earmuffs", data = 60},
+            {description = "Winter(default)", data = 120},
+            {description = "Winter+Breezy", data = 180},
+            {description = "Hibearnation", data = 240},
+       },
+        default = 120,
+    },
+    {
+        name = "BrookHyperIns",
+        label = "Heat Resistance",
+        options =
+        {
+            {description = "Miniscule", data = 30},
+            {description = "Straw Hat", data = 60},
+            {description = "Frest(default)", data = 120},
+            {description = "Frest+Straw", data = 180},
+            {description = "Eyebrella", data = 240},
+       },
+        default = 120,
     },
 }

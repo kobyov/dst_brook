@@ -69,7 +69,8 @@ TUNING.BROOK["health"] = GetModConfigData("BrookHealth")
 TUNING.BROOK["hunger"] = GetModConfigData("BrookHunger")
 TUNING.BROOK["sanity"] = GetModConfigData("BrookSanity")
 TUNING.BROOK["damage"] = GetModConfigData("BrookDamage")
-
+TUNING.BROOK["coldresist"] = GetModConfigData("BrookHypoIns")
+TUNING.BROOK["heatresist"] = GetModConfigData("BrookHyperIns")
 
 -- Add mod character to mod character list. Also specify a gender. Possible genders are MALE, FEMALE, ROBOT, NEUTRAL, and PLURAL.
 AddModCharacter("brook", "MALE")
