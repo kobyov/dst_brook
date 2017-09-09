@@ -59,16 +59,21 @@ local function onload(inst)
     end
 end
 
-local function friendcheck(inst)
-	local x,y,z = inst.Transform:GetWorldPosition()
-	local range = TUNING.ONEMANBAND_RANGE
-	local friends = TheSim:FindEntities(x, y, z, range, {"player"}, {"playerghost"})
-	local count = friends - 1
-	if count >= 1 then
-		inst.components.sanity.dapperness = DAPPERNESS_MED_LARGE
-	else
-		inst.components.sanity.dapperness = -1 * DAPPERNESS_SMALL
-	end
+local function sanityfn(inst)
+    local x, y, z = inst.Transform:GetWorldPosition()
+    local delta = 0
+    local max_rad = 10
+    local ents = TheSim:FindEntities(x, y, z, max_rad, { "fire" })
+    for i, v in ipairs(ents) do
+        if v.components.burnable ~= nil and v.components.burnable:IsBurning() then
+            local rad = v.components.burnable:GetLargestLightRadius() or 1
+            local sz = TUNING.SANITYAURA_TINY * math.min(max_rad, rad) / max_rad
+            local distsq = inst:GetDistanceSqToInst(v) - 9
+            -- shift the value so that a distance of 3 is the minimum
+            delta = delta + sz / math.max(1, distsq)
+        end
+    end
+    return delta
 end
 
 -- This initializes for both the server and client. Tags can be added here.
@@ -91,6 +96,7 @@ local master_postinit = function(inst)
 	inst.components.health:SetMaxHealth(150)
 	inst.components.hunger:SetMax(175)
 	inst.components.sanity:SetMax(125)
+    inst.components.sanity.custom_rate_fn = sanityfn
 
     -- Food heals halved
     local _Eat = inst.components.eater.Eat
