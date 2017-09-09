@@ -65,13 +65,13 @@ local function sanityfn(inst)
     local max_rad = 10
     local ents = TheSim:FindEntities(x, y, z, max_rad, { "player" }, { "playerghost" })
     for i, v in ipairs(ents) do
-        delta = delta + TUNING.SANITYAURA.MED
+        delta = delta + TUNING.SANITYAURA_MED
     end
     -- remove for brook
-    delta = delta - TUNING.SANITYAURA.MED
+    delta = delta - TUNING.SANITYAURA_MED
     -- brook is alone
     if (delta == 0) then
-        delta = delta - TUNING.SANITYAURA.SMALL
+        delta = delta - TUNING.SANITYAURA_SMALL
     end
     return delta
 end
