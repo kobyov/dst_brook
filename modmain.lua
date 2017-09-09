@@ -33,6 +33,7 @@ local STRINGS = GLOBAL.STRINGS
 local Ingredient = GLOBAL.Ingredient
 local RecipeTabs = GLOBAL.RECIPETABS
 local Tech = GLOBAL.TECH
+local TUNING = GLOBAL.TUNING
 
 STRINGS.NAMES.SWORDCANE = "Humming Sword"
 STRINGS.NAMES.VIOLIN = "Brook's Violin"
@@ -61,6 +62,14 @@ STRINGS.CHARACTERS.GENERIC.DESCRIBE.BROOK =
 
 
 AddMinimapAtlas("images/map_icons/brook.xml")
+
+-- Pull in config data
+TUNING.BROOK = {}
+TUNING.BROOK["health"] = GetModConfigData("BrookHealth")
+TUNING.BROOK["hunger"] = GetModConfigData("BrookHunger")
+TUNING.BROOK["sanity"] = GetModConfigData("BrookSanity")
+TUNING.BROOK["damage"] = GetModConfigData("BrookDamage")
+
 
 -- Add mod character to mod character list. Also specify a gender. Possible genders are MALE, FEMALE, ROBOT, NEUTRAL, and PLURAL.
 AddModCharacter("brook", "MALE")

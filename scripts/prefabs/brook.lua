@@ -37,6 +37,7 @@ local assets = {
 local prefabs = {
 }
 
+
 -- Custom starting items
 local start_inv = {
     "swordcane",
@@ -90,10 +91,10 @@ local master_postinit = function(inst)
 	-- Uncomment if "wathgrithr"(Wigfrid) or "webber" voice is used
     --inst.talker_path_override = "dontstarve_DLC001/characters/"
 
-    inst.components.health:SetMaxHealth(GetModConfigData("BrookHealth"))
-	inst.components.hunger:SetMax(GetModConfigData("BrookSanity"))
-	inst.components.sanity:SetMax(GetModConfigData("BrookHunger"))
-    inst.components.combat.damagemultiplier = (GetModConfigData("BrookDamage"))
+    inst.components.health:SetMaxHealth(TUNING.BROOK.health)
+	inst.components.hunger:SetMax(TUNING.BROOK.hunger)
+	inst.components.sanity:SetMax(TUNING.BROOK.sanity)
+    inst.components.combat.damagemultiplier = TUNING.BROOK.damage
 
     inst.components.sanity.custom_rate_fn = sanityfn
 
