@@ -89,11 +89,12 @@ local master_postinit = function(inst)
 	
 	-- Uncomment if "wathgrithr"(Wigfrid) or "webber" voice is used
     --inst.talker_path_override = "dontstarve_DLC001/characters/"
-	
-	-- Stats	
-	inst.components.health:SetMaxHealth(150)
-	inst.components.hunger:SetMax(175)
-	inst.components.sanity:SetMax(125)
+
+    inst.components.health:SetMaxHealth(GetModConfigData("BrookHealth"))
+	inst.components.hunger:SetMax(GetModConfigData("BrookSanity"))
+	inst.components.sanity:SetMax(GetModConfigData("BrookHunger"))
+    inst.components.combat.damagemultiplier = (GetModConfigData("BrookDamage"))
+
     inst.components.sanity.custom_rate_fn = sanityfn
 
     -- Food heals halved
