@@ -63,16 +63,15 @@ local function sanityfn(inst)
     local x, y, z = inst.Transform:GetWorldPosition()
     local delta = 0
     local max_rad = 10
-    local ents = TheSim:FindEntities(x, y, z, max_rad, { "fire" })
+    local ents = TheSim:FindEntities(x, y, z, max_rad, { "player" }, { "playerghost" })
     for i, v in ipairs(ents) do
-        if v.components.burnable ~= nil and v.components.burnable:IsBurning() then
-            local rad = v.components.burnable:GetLargestLightRadius() or 1
-            local sz = TUNING.SANITYAURA_TINY * math.min(max_rad, rad) / max_rad
-            local distsq = inst:GetDistanceSqToInst(v) - 9
-            -- shift the value so that a distance of 3 is the minimum
-            delta = delta + sz / math.max(1, distsq)
-        end
+        delta += TUNING.SANITYAURA.MED
     end
+    --remove for brook
+    delta -= TUNING.SANITYAURA.MED
+    if (delta == 0) { --brook is lonely
+            delta -= TUNING.SANITYAURA.SMALL
+        }
     return delta
 end
 
