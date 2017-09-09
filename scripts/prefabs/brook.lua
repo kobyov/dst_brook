@@ -67,9 +67,10 @@ local function sanityfn(inst)
     for i, v in ipairs(ents) do
         delta = delta + TUNING.SANITYAURA.MED
     end
-    --remove for brook
+    -- remove for brook
     delta = delta - TUNING.SANITYAURA.MED
-    if (delta == 0) then { --brook is alone
+    -- brook is alone
+    if (delta == 0) then {
             delta = delta - TUNING.SANITYAURA.SMALL
         }
     return delta
