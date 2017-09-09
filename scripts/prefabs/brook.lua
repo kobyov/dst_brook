@@ -107,9 +107,6 @@ local master_postinit = function(inst)
         return _Eat( self, food )
     end
 
-    -- Lonely
-    inst.updatetask = inst:DoPeriodicTask(1, friendcheck)
-
     -- Insulated from temp changes
     inst.components.temperature.inherentinsulation = 120
     inst.components.temperature.inherentsummerinsulation = -120
