@@ -70,9 +70,9 @@ local function sanityfn(inst)
     -- remove for brook
     delta = delta - TUNING.SANITYAURA.MED
     -- brook is alone
-    if (delta == 0) then {
-            delta = delta - TUNING.SANITYAURA.SMALL
-        }
+    if (delta == 0) then
+        delta = delta - TUNING.SANITYAURA.SMALL
+    end
     return delta
 end
 
