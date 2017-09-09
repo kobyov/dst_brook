@@ -67,7 +67,7 @@ local function friendcheck(inst)
 	if count >= 1 then
 		inst.components.sanity.dapperness = DAPPERNESS_MED_LARGE
 	else
-		inst.components.sanity.dapperness = -1 x DAPPERNESS_SMALL
+		inst.components.sanity.dapperness = -1 * DAPPERNESS_SMALL
 	end
 end
 
